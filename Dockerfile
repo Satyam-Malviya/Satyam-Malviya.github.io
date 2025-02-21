@@ -1,21 +1,23 @@
-# Stage 1: Compile and Build Angular Codebase
+# Stage 1: Compile and Build angular codebase
+
 FROM node:alpine as build
 
 RUN mkdir -p /app
 WORKDIR /app
 COPY package.json /app
 
-RUN npm install --force
+RUN npm install -f
 
 COPY . /app
 RUN npm run build
 
-# Stage 2: Serve app with Nginx
+# Stage 2: Serve app with nginx server
+
 FROM nginx:alpine
 
-# Ensure we use the correct build output directory
-COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=build /app/build /usr/share/nginx/html
 
 LABEL org.opencontainers.image.source https://github.com/Satyam-Malviya/Satyam-Malviya.github.io
+LABEL org.opencontainers.image.description Docker Image of my Personal Portfolio.
 
 EXPOSE 80
