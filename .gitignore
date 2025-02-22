@@ -47,4 +47,3 @@ node_modules
 cmd
 .angular
 src/assets/model/model.py
-.vercel
